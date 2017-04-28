@@ -1,0 +1,47 @@
+<div class="form-horizontal form-label-left">
+	<div class="form-group">
+		<label class="control-label col-sm-1 col-xs-12">Diagramme</label>
+		<div class="col-sm-8 col-xs-12">
+			<div class="btn-group">
+				<label *ngIf="valuesForChart" class="btn btn-primary" [(ngModel)]="typeChart" btnRadio="doughnut">Donut</label>
+				<label *ngIf="valuesForChart" class="btn btn-primary" [(ngModel)]="typeChart" btnRadio="pie">Camembert</label>
+				<label *ngIf="valuesForChart" class="btn btn-primary" [(ngModel)]="typeChart" btnRadio="polar">Polar Chart</label>
+				<label *ngIf="valuesForBarChart" class="btn btn-warning" [(ngModel)]="typeChart" btnRadio="bar">Barres</label>
+				<label *ngIf="valuesForBarChart" class="btn btn-warning" [(ngModel)]="typeChart" btnRadio="radar">Radar</label>
+				<label *ngIf="valuesForBarChart" class="btn btn-warning" [(ngModel)]="typeChart" btnRadio="line">Lignes</label>
+			</div>
+		</div>
+
+		<label class="control-label col-sm-1 col-xs-12">Agrégat</label>
+		<div class="col-sm-2 col-xs-12">
+			<select (change)="aggregateChange($event.target.value)" class="form-control">
+				<option value="count">Nombre</option>
+				<option value="mean">Moyenne</option>								
+				<option value="sum">Somme</option>
+				<option value="min">Minimun</option>
+				<option value="max">Maximun</option>
+				<option value="median">Médiane</option>
+				<option value="stddev">Écart type</option>
+				<option value="first">Premier élément</option>
+				<option value="last">Dernier élément</option>
+			</select>
+		</div>
+	</div>
+</div>						
+<div class="row">
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		<div class="x_panel">
+			<div class="x_content">	
+				<div [ngSwitch]="typeChart">
+					<doughnut-chart template="ngSwitchCase 'doughnut'" [label]="labels" [valuesForChart]="valuesForChart"></doughnut-chart>
+					<pie-chart  template="ngSwitchCase 'pie'" [label]="labels" [valuesForChart]="valuesForChart"></pie-chart>
+					<polar-area-chart  template="ngSwitchCase 'polar'" [label]="labels" [valuesForChart]="valuesForChart"></polar-area-chart>
+					
+					<bar-chart template="ngSwitchCase 'bar'" [label]="labels" [valuesForChart]="valuesForBarChart"></bar-chart>
+					<radar-chart  template="ngSwitchCase 'radar'" [label]="labels" [valuesForChart]="valuesForBarChart"></radar-chart>
+					<line-chart template="ngSwitchCase 'line'" [label]="labels" [valuesForChart]="valuesForBarChart"></line-chart>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

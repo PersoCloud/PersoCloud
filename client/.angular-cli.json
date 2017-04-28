@@ -1,0 +1,47 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "project": {
+    "name": "persocloud"
+  },
+  "apps": [
+    {
+      "root": "src",
+      "outDir": "dist",
+      "index": "index.html",
+      "main": "main.ts",
+      "polyfills": "polyfills.ts",
+      "tsconfig": "tsconfig.app.json",
+      "prefix": "app",
+      "styles": [        
+		"../node_modules/bootstrap/dist/css/bootstrap.min.css",
+        "../node_modules/font-awesome/css/font-awesome.css",        
+		"../node_modules/ion-rangeslider/css/ion.rangeSlider.css",
+        "../node_modules/ion-rangeslider/css/ion.rangeSlider.skinHTML5.css",	
+        "../node_modules/icheck/skins/flat/green.css",	
+        "custom.min.css",
+		"styles.css"
+      ],
+      "scripts": [
+		"../node_modules/chart.js/dist/Chart.bundle.js",
+		"../node_modules/jquery/dist/jquery.min.js", 
+		"../node_modules/jquery-mask-plugin/dist/jquery.mask.min.js",
+		"../node_modules/moment/moment.js", 
+        "../node_modules/ion-rangeslider/js/ion.rangeSlider.min.js",	
+        "../node_modules/icheck/icheck.min.js"
+	  ],
+      "environmentSource": "environments/environment.ts",
+      "environments": {
+        "dev": "environments/environment.ts",
+		"dev_api": "environments/environment.dev-api.ts",
+        "prod": "environments/environment.prod.ts"		
+      }
+    }
+  ],
+  "addons": [
+    "../node_modules/font-awesome/fonts/*.+(otf|eot|svg|ttf|woff|woff2)"
+  ],
+  "defaults": {
+    "styleExt": "css",
+    "component": {}
+  }
+}

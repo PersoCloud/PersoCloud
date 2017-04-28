@@ -1,0 +1,47 @@
+<div class="container body">
+  <div class="main_container">
+	<div class="col-md-3 left_col">
+	  <div class="left_col scroll-view">
+		<div class="navbar nav_title" style="border: 0;">
+		  <a href="index.html" class="site_title"><i class="fa fa-pie-chart"></i> <span>PersoCloud</span></a>
+		</div>
+		<div class="clearfix"></div>
+		<br />
+	   <!-- sidebar menu -->
+		<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+		  <div class="menu_section">
+			<h3>Général</h3>
+			<ul class="nav side-menu">
+			  <li><a routerLink="/" routerLinkActive="active"><i class="fa fa-home"></i> Accueil</a></li>
+			  <li><a routerLink="/profil" routerLinkActive="active"><i class="fa fa-user"></i> Votre profil</a></li>
+			  <li><a routerLink="/partage" routerLinkActive="active"><i class="fa fa-share-alt"></i> Votre politique de partage</a></li>			  
+			  <li><a routerLink="/aide" routerLinkActive="active"><i class="fa fa-info-circle"></i> Aide / À propos</a></li>
+			</ul>
+		  </div>
+		  <div *ngIf="envAnalyzeService == 'dummy'" class="menu_section">
+			<ul class="nav side-menu">
+			  <li><a routerLink="#" routerLinkActive="disabled">
+				/!\ Le dummy service ne renvoit plus les bonnes données. Il faut compiler la partie cliente avec l'option dev_api.
+			  </a></li>			  
+			</ul>
+		  </div>
+		</div>
+		<!-- sidebar menu -->
+	  </div>
+	</div>
+	
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		<div class="left_col scroll-view">
+			<!-- page content -->
+			<div class="right_col" role="main">
+				<div class="">
+					<div> 
+						<!-- <donnees></donnees> -->
+						<router-outlet></router-outlet>
+					</div>
+				</div>
+			<!-- page content -->
+			</div>
+		</div>
+	</div>
+</div>
