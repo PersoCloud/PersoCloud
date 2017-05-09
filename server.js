@@ -19,9 +19,12 @@ app.use(bodyParser.json()); // parse application/json
 app.use(methodOverride());
 
 if(config.cozyid == "InsererLeCozyID") {
-	console.error("Erreur : Insérer un CozyId dans le fichier config.js.\nPenser à envoyer des données vers le moteur en allant sur http://localhost:9104/apps/persocloud/api/senddata");
+	console.error("Erreur : Insérer un CozyId dans le fichier config.js.");
 	return;		
 }
+
+// Lancement de l'envoi périodique des données
+var ctrl_senddata = require("./server/controllers/sendRandomData.js");
 
 // Lancement du serveur
 var routes = require('./server/routes'); // Chargement des routes de l'API
@@ -30,7 +33,9 @@ cozydb.configure(__dirname, null, function() {
 	var server = app.listen(config.server.port, function () {
 		var host = server.address().address;
 		var port = server.address().port;
-		console.log("App PersoCloud listening on http://localhost:9104/apps/persocloud/ and http://localhost:" + port+"/");
+		console.log("Application PersoCloud démarré sur http://localhost:9104/apps/persocloud/ et http://localhost:" + (port) +"/");
+		console.log("CozyID : " + config.cozyid);
+		console.log("Tâche Cron pour l'envoi péridique des données : " + config.server.senddata);
 	});
 })
 

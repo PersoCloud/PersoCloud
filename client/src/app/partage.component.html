@@ -30,66 +30,25 @@
 					<div class="col-md-2 col-sm-2 col-xs-12"></div>
 				</div>
 				<div class="row" style="margin-top: 10px;">
-					<div class="col-md-12 col-sm-12 col-xs-12">
-						<span class="section">Humeur</span>
-						<div class="row">
-							<div class="col-sm-3 col-xs-6">
-								<label><input type="checkbox" name="quux[1]" > Humeur</label>
+					<div class="col-md-12 col-sm-12 col-xs-12">					
+						<div *ngFor="let cbSection of sharingPolicy; let section_i = index;">
+							<span class="section">{{cbSection.label}}</span>
+							<div class="row">
+								<div *ngFor="let type of cbSection.types; let type_i = index;" class="col-sm-3 col-xs-6">
+									<label><input type="checkbox" id="{{type.key}}"> {{type.label}}</label>
+								</div>
 							</div>
 						</div>
-						<span class="section">Consommation</span>
-						<div class="row">
-							<div class="col-sm-3 col-xs-6">
-								<label><input type="checkbox" name="quux[1]" > EDF</label>
-							</div>
-							<div class="col-sm-3 col-xs-6">
-								<label><input type="checkbox" name="quux[1]" > Direct Energie</label>
-							</div>
-						</div>
-						<span class="section">Factures</span>
-						<div class="row">
-							<div class="col-sm-3 col-xs-6">
-								<!-- <label *ngFor="let cb of checkboxes">
-									<input type="checkbox" [(ngModel)]="cb.chosen">{{cb.label}}
-								</label> -->
-								<label><input type="checkbox" name="quux[1]" > Numericable</label><br>										
-								<label><input type="checkbox" name="quux[1]" > Bouygues Box</label><br>											
-								<label><input type="checkbox" name="quux[1]" > Free</label><br>										
-								<label><input type="checkbox" name="quux[1]" > Orange</label>
-							</div>
-							<div class="col-sm-3 col-xs-6">
-								<label><input type="checkbox" name="quux[1]" > Free Mobile</label><br>
-								<label><input type="checkbox" name="quux[1]" > Sfr mobile</label><br>
-								<label><input type="checkbox" name="quux[1]" > Sosh</label><br>								
-								<label><input type="checkbox" name="quux[1]" > Virgin mobile</label>
-							</div>
-							<div class="col-sm-3 col-xs-6">
-								<label><input type="checkbox" name="quux[1]" > Voyages SNCF</label><br>
-								<label><input type="checkbox" name="quux[1]" > APRR</label><br>										
-								<label><input type="checkbox" name="quux[1]" > Ameli</label><br>	
-								<label><input type="checkbox" name="quux[1]" > Github</label>
-							</div>
-							<div class="col-sm-3 col-xs-6">
-								<label><input type="checkbox" name="quux[1]" > Materiel.net</label><br>									
-								<label><input type="checkbox" name="quux[1]" > vente-privee.com</label><br>
-								<label><input type="checkbox" name="quux[1]" > Darty</label>										
-							</div>
-						</div>
-						<span class="section">Données bancaires</span>
-						<div class="row">
-							<div class="col-sm-3 col-xs-6">
-								<label><input type="checkbox" name="quux[1]"> Caisse d'Epargne</label>
-							</div>
-							<div class="col-sm-3 col-xs-6">
-								<label><input type="checkbox" name="quux[1]"> Crédit Agricole</label>
-							</div>
-							<div class="col-sm-3 col-xs-6">
-								<label><input type="checkbox" name="quux[1]"> Crédit Mutuel</label>
-							</div>
-							<div class="col-sm-3 col-xs-6">
-								<label><input type="checkbox" name="quux[1]"> LCL</label>
-							</div>
-						</div>
+					</div>
+				</div>
+				<div class="ln_solid"></div>
+				<div class="row">
+					<div class="col-md-offset-3">
+						<button type="submit" (click)="save()" class="btn btn-success">Enregistrer</button>
+						<div *ngIf="error != undefined || success != undefined" style="margin-left:110px;margin-top: -30px; margin-bottom:11px;">
+							<i *ngIf="error != undefined" class="red">{{ error }}</i>
+							<i *ngIf="success != undefined" class="green">{{ success }}</i>
+						</div>	
 					</div>
 				</div>
 			</div>

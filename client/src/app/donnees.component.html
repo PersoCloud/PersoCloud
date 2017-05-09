@@ -28,10 +28,10 @@
 							<select (change)="groupChange($event.target.value)" class="form-control" id="group">
 								<!--<option value="" selected>Regrouper par</option>-->
 								<option value="time">Temps</option>
-								<option *ngFor="let item of availableGroupKeys[analyzeOptions.field]" value="{{ item.key }}">{{ item.label }}</option>
+								<option *ngFor="let item of availableGroupKeys[analyzeOptions_editing.field]" value="{{ item.key }}">{{ item.label }}</option>
 							</select>
 						</div>
-						<div *ngIf="analyzeOptions?.group == 'time'" class="col-md-3 col-sm-3 col-xs-12 form-group"> 
+						<div *ngIf="analyzeOptions_editing?.group == 'time'" class="col-md-3 col-sm-3 col-xs-12 form-group"> 
 							<div class="row">
 								<div class="col-xs-12">	
 									<label for="groupTimeValue">Précision</label>
@@ -39,7 +39,7 @@
 							</div>
 							<div class="row">
 								<div class="col-xs-4">								
-									<input type="number" id="groupTimeValue" (change)="groupTimeValueChange($event.target.value)" min="1" max="365" value="1" class="form-control">
+									<input type="number" id="groupTimeValue" (keyup)="groupTimeValueChange($event.target.value)" (change)="groupTimeValueChange($event.target.value)" min="1" max="365" value="1" class="form-control">
 								</div>
 								<div class="col-xs-8">
 									<select (change)="groupTimeDurationChange($event.target.value)" class="form-control">
@@ -53,8 +53,8 @@
 						</div>
 						<!--<div class="col-md-3 col-sm-3 col-xs-12 form-group"> 
 							<select (change)="metakeyChange($event.target.value)" class="form-control">
-								<option *ngIf="analyzeOptions?.field == undefined" value="" disabled selected>Metakey</option>
-								<option *ngFor="let item of availableMetaKeys[analyzeOptions.field]" value="{{ item.key }}">{{ item.label }}</option>							
+								<option *ngIf="analyzeOptions_editing?.field == undefined" value="" disabled selected>Metakey</option>
+								<option *ngFor="let item of availableMetaKeys[analyzeOptions_editing.field]" value="{{ item.key }}">{{ item.label }}</option>							
 							</select>
 						</div>-->						
 					</div>
@@ -62,10 +62,25 @@
 					<div class="row">
 						<div class="col-md-12 col-sm-12 col-xs-12 form-group" style="height:70px;">
 							<div style="width: 60px; height: 70px;">
-								<label class="control-label" style="width: 40px; margin-left: auto; margin-right: auto; position: relative; top: 50%; transform: translateY(-50%);">Période</label>
+								<label class="control-label" style="text-align:right; width: 40px; margin-left: auto; margin-right: auto; position: relative; top: 50%; transform: translateY(-50%);">
+									Période<br>
+									<small><abbr title="Période au temps universel UTC">UTC</abbr></small>
+								</label>
 							</div>
 							<div style="width: 92%; position: relative; top: -70px; margin-left: 70px;">
-								<input type="text" id="period_slider" name="period_slider" value="" />
+								<input type="text" id="period_slider" name="period_slider" value="" />								
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6 col-sm-8 col-xs-12 form-group">
+							<div class="control-group">
+								<div class="controls">
+									<div class="input-prepend input-group" style="margin-left:70px;">
+										<span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+										<input type="text" class="form-control" id="period_daterangeInput" name="period_daterangeInput" daterangepicker [options]="period_daterange_options" (selected)="selectedPeriodDaterange($event)" (applyDaterangepicker)="applyPeriodDaterange($event)" />
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -75,7 +90,7 @@
 						</div>
 					</div>
 					<div *ngIf="serviceError != undefined" class="row">
-						<div class="col-xs-6">
+						<div class="col-sm-6 col-xs-12">
 							<alert type="error" dismissible="true">{{ serviceError }}</alert>
 						</div>
 					</div>
@@ -88,19 +103,7 @@
 <div *ngIf="analyzeResults" class="row">
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="x_panel">			
-			<donnees-traitement [donnees]="analyzeResults" [analyzeOptions]="analyzeOptions"></donnees-traitement>
+			<donnees-traitement [donnees]="analyzeResults" [analyzeOptions]="analyzeOptions" [analyzeStarted]="analyzeStarted"></donnees-traitement>
 		</div>
 	</div>
 </div>
-<!--
-<div>
-	<h2>Données cozy - Données & Metadonnées</h2>
-	<pre *ngIf="analyzeResults">{{ analyzeResults.cozy | json }}</pre>
-</div>
-<div>
-	<h2>Données moteur</h2>
-	<h2>Metadonnées</h2>
-	<pre *ngIf="analyzeResults">{{ analyzeResults.engine.meta | json }}</pre>
-	<h2>Données</h2>
-	<pre *ngIf="analyzeResults">{{ analyzeResults.engine.data | json }}</pre>
-</div>-->

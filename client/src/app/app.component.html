@@ -21,7 +21,7 @@
 		  <div *ngIf="envAnalyzeService == 'dummy'" class="menu_section">
 			<ul class="nav side-menu">
 			  <li><a routerLink="#" routerLinkActive="disabled">
-				/!\ Le dummy service ne renvoit plus les bonnes données. Il faut compiler la partie cliente avec l'option dev_api.
+				/!\ Le dummy service ne renvoit plus le bon format de donnée. Il faut compiler la partie cliente avec l'option dev_api.
 			  </a></li>			  
 			</ul>
 		  </div>
@@ -30,18 +30,14 @@
 	  </div>
 	</div>
 	
-	<div class="col-md-12 col-sm-12 col-xs-12">
-		<div class="left_col scroll-view">
-			<!-- page content -->
-			<div class="right_col" role="main">
-				<div class="">
-					<div> 
-						<!-- <donnees></donnees> -->
-						<router-outlet></router-outlet>
-					</div>
-				</div>
-			<!-- page content -->
+	<!-- page content -->
+	<div class="right_col" role="main">
+		<div class="">
+			<div> 
+				<!-- <donnees></donnees> -->
+				<router-outlet></router-outlet>
 			</div>
 		</div>
+	<!-- page content -->
 	</div>
 </div>

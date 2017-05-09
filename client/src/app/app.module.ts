@@ -8,19 +8,14 @@ import { ButtonsModule, AlertModule, TooltipModule } from 'ngx-bootstrap';
 import { IonRangeSliderModule } from "ng2-ion-range-slider";
 import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome'
 import { MomentModule } from 'angular2-moment';
-
+import { Daterangepicker } from 'ng2-daterangepicker';
 import { ChartsModule } from 'ng2-charts';
-import { PieChartComponent } from './charts/pie-chart';
-import { DoughnutChartComponent } from './charts/doughnut-chart';
-import { PolarAreaChartComponent } from './charts/polar-area-chart';
-import { BarChartComponent } from './charts/bar-chart';
-import { LineChartComponent } from './charts/line-chart';
-import { RadarChartComponent } from './charts/radar-chart';
 
 import { AppComponent } from './app.component';
 import { DonneesComponent }	from './donnees.component';
 import { DonneesTraitementComponent }	from './donnees.traitement.component';
 import { AnalyzeService } from './analyze.service';
+import { OptionService } from './option.service';
 import { AideComponent }  from './aide.component';
 import { PartageComponent } from './partage.component';
 import { ProfilComponent } from './profil.component';
@@ -31,12 +26,6 @@ import { ProfilComponent } from './profil.component';
     AppComponent,
 	DonneesComponent,
 	DonneesTraitementComponent,
-	PieChartComponent,
-	DoughnutChartComponent,
-	PolarAreaChartComponent,
-	BarChartComponent,
-	LineChartComponent,
-	RadarChartComponent,
 	PartageComponent,
 	ProfilComponent
   ],
@@ -49,12 +38,14 @@ import { ProfilComponent } from './profil.component';
 	IonRangeSliderModule,
 	Angular2FontawesomeModule,
 	MomentModule,
+	Daterangepicker,
 	ButtonsModule.forRoot(),
 	AlertModule.forRoot(),
 	TooltipModule.forRoot()
   ],
   providers: [
-    AnalyzeService
+    AnalyzeService,
+	OptionService
   ],
   bootstrap: [AppComponent]
 })

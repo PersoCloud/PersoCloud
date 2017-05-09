@@ -1,6 +1,6 @@
 {
   "name": "persocloud",
-  "version": "1.0.1",
+  "version": "1.1.1",
   "license": "MIT",
   "description": "La comparaison de données à portée de Cloud",
   "repository": {
@@ -24,6 +24,7 @@
     "install": "cd client && npm install",
     "start": "node server.js"
   },
+  "icon-path": "icon.png",
   "cozy-permissions": {
     "All": {
       "description": "Toutes permissions pour la phase de développement."

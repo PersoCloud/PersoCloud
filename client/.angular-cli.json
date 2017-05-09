@@ -18,8 +18,8 @@
 		"../node_modules/ion-rangeslider/css/ion.rangeSlider.css",
         "../node_modules/ion-rangeslider/css/ion.rangeSlider.skinHTML5.css",	
         "../node_modules/icheck/skins/flat/green.css",	
-        "custom.min.css",
-		"styles.css"
+		"../node_modules/bootstrap-daterangepicker/daterangepicker.css",
+        "custom.min.css"
       ],
       "scripts": [
 		"../node_modules/chart.js/dist/Chart.bundle.js",
@@ -27,7 +27,9 @@
 		"../node_modules/jquery-mask-plugin/dist/jquery.mask.min.js",
 		"../node_modules/moment/moment.js", 
         "../node_modules/ion-rangeslider/js/ion.rangeSlider.min.js",	
-        "../node_modules/icheck/icheck.min.js"
+        "../node_modules/icheck/icheck.min.js",		
+		"../node_modules/bootstrap-daterangepicker/daterangepicker.js",
+		"../node_modules/randomColor/randomcolor.js"
 	  ],
       "environmentSource": "environments/environment.ts",
       "environments": {

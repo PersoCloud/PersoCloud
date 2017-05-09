@@ -1,11 +1,11 @@
 var config = {};
 //config.cozyid = "InsererLeCozyID"
-config.cozyid = "zJOv6i" // TODO: Récupération depuis CouchDB
+config.cozyid = "CozyID56" // TODO: Récupération depuis CouchDB
 
 config.server = {};
 config.server.port = 9256;
 config.server.path = "/api";
-config.server.senddata = "*/10 * * * * *"; // Envoi de données toutes les x secondes
+config.server.senddata = "*/5 * * * * *"; // Envoi de données toutes les x secondes
 //config.server.senddata = "0 * * * *"; // Envoi de données toutes les heures
 
 config.engine = {};

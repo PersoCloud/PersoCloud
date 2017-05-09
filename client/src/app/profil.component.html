@@ -16,25 +16,24 @@
 				<div class="form-group">
 					<label class="control-label col-md-3 col-sm-3 col-xs-3">Date de naissance</label>
 					<div class="col-md-6 col-sm-6 col-xs-12">
-						<input class="form-control" type="text"/>
+						<input class="form-control" type="text" [(ngModel)]="profile[birthdate]" [ngModelOptions]="{standalone: true}" />
 					</div>
 				</div>
 				<div class="item form-group" style="margin-bottom:15px;">
 					<label class="control-label col-md-3 col-sm-3 col-xs-12">Genre</label>
 					<div class="col-md-6 col-sm-6 col-xs-12">								
 						<div class="btn-group">
-							<label class="btn btn-primary active" [(ngModel)]="radioGendor" [ngModelOptions]="{standalone: true}" btnRadio="unspecified">Non précisé</label>
-							<label class="btn btn-primary" [(ngModel)]="radioGendor" [ngModelOptions]="{standalone: true}"  btnRadio="female">Femme</label>
-							<label class="btn btn-primary" [(ngModel)]="radioGendor" [ngModelOptions]="{standalone: true}"  btnRadio="male">Homme</label>
-							<label class="btn btn-primary" [(ngModel)]="radioGendor" [ngModelOptions]="{standalone: true}"  btnRadio="other">Autre</label>						  
+							<label class="btn btn-primary active" [(ngModel)]="profile['gender']" [ngModelOptions]="{standalone: true}" btnRadio="null">Non précisé</label>
+							<label class="btn btn-primary" [(ngModel)]="profile['gender']" [ngModelOptions]="{standalone: true}"  btnRadio="female">Femme</label>
+							<label class="btn btn-primary" [(ngModel)]="profile['gender']" [ngModelOptions]="{standalone: true}"  btnRadio="male">Homme</label>
+							<label class="btn btn-primary" [(ngModel)]="profile['gender']" [ngModelOptions]="{standalone: true}"  btnRadio="other">Autre</label>						  
 						</div>
 					</div>
 				</div>
 				<div class="item form-group">
 					<label class="control-label col-md-3 col-sm-3 col-xs-12">Pays</label>
 					<div class="col-md-6 col-sm-6 col-xs-12">
-					  <select class="form-control">
-						<option value="France" selected>France</option>
+					  <select class="form-control" [(ngModel)]="profile['country']" [ngModelOptions]="{standalone: true}">
 						<option value="Afghanistan">Afghanistan </option>
 						<option value="Afrique_Centrale">Afrique Centrale </option>
 						<option value="Afrique_du_sud">Afrique du Sud </option>
@@ -44,7 +43,7 @@
 						<option value="Andorre">Andorre </option>
 						<option value="Angola">Angola </option>
 						<option value="Anguilla">Anguilla </option>
-						<option value="Arabie_Saoudite">Arabie Saoudite </option>
+						<option value="Arabie_Saoudite">Arabie Saoudite</option>
 						<option value="Argentine">Argentine </option>
 						<option value="Armenie">Armenie </option>
 						<option value="Australie">Australie </option>
@@ -232,7 +231,7 @@
 						<option value="Rwanda">Rwanda </option>
 
 						<option value="Sahara Occidental">Sahara Occidental </option>
-						<option value="Sainte_Lucie">Sainte_Lucie </option>
+						<option value="Sainte_Lucie">Sainte Lucie </option>
 						<option value="Saint_Marin">Saint_Marin </option>
 						<option value="Salomon">Salomon </option>
 						<option value="Salvador">Salvador </option>
@@ -275,8 +274,8 @@
 						<option value="Vanuatu">Vanuatu </option>
 						<option value="Vatican">Vatican </option>
 						<option value="Venezuela">Venezuela </option>
-						<option value="Vierges_Americaines">Vierges_Americaines </option>
-						<option value="Vierges_Britanniques">Vierges_Britanniques </option>
+						<option value="Vierges_Americaines">Vierges Americaines </option>
+						<option value="Vierges_Britanniques">Vierges Britanniques </option>
 						<option value="Vietnam">Vietnam </option>
 
 						<option value="Wake">Wake </option>
@@ -294,19 +293,24 @@
 				<div class="item form-group">
 					<label class="control-label col-md-3 col-sm-3 col-xs-12">Code postal</label>
 					<div class="col-md-1 col-sm-1 col-xs-12">
-					  <input type="text" class="form-control" name="zipcode">
+					  <input type="text" class="form-control" [(ngModel)]="profile['zip_code']" [ngModelOptions]="{standalone: true}">
 					</div>
 					<label class="control-label col-md-1 col-sm-1 col-xs-12">Ville</label>
 					<div class="col-md-4 col-sm-4 col-xs-12">
-					  <input type="text" class="form-control" name="city">
+					  <input type="text" class="form-control" [(ngModel)]="profile['city']" [ngModelOptions]="{standalone: true}">
 					</div>
 				</div>
 					  
 				<div class="ln_solid"></div>
 				<div class="form-group">
-					<div class="col-md-6 col-md-offset-3">
-						<button type="submit" class="btn btn-primary">Annuler</button>
-						<button id="send" type="submit" class="btn btn-success">Enregistrer</button>
+					<div class="row">
+						<div class="col-md-offset-3">
+							<button type="submit" (click)="save()" class="btn btn-success">Enregistrer</button>
+							<div *ngIf="error != undefined || success != undefined" style="margin-left:110px;margin-top: -19px;">
+								<i *ngIf="error != undefined" class="red">{{ error }}</i>
+								<i *ngIf="success != undefined" class="green">{{ success }}</i>
+							</div>							
+						</div>
 					</div>
 				</div>
 			</form>

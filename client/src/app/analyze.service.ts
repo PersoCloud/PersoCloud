@@ -20,7 +20,7 @@ export class AnalyzeService {
 			path += "&metakey=" + options.metakey;
 		}
 		if(options.period != undefined) {
-			path += "&period=" + moment(options.period.start, 'X').toISOString() + ";" + moment(options.period.end, 'X').toISOString();
+			path += "&period=" + moment(options.period.start, 'X').utc().toISOString() + ";" + moment(options.period.end, 'X').utc().toISOString();
 		}
 		if(options.group != undefined) {
 			path += "&group=" + options.group;

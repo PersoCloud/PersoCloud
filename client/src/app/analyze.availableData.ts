@@ -60,3 +60,10 @@ export class AvailableData {
 			}]		
 	};
 }
+	
+export class SharingPermissionsModel {
+	label: string
+	base: string
+	key: string
+	types: Array<{key: string, label: string, value: string, allowed: boolean}>
+};

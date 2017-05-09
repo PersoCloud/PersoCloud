@@ -9,28 +9,37 @@ var express = require('express');
 var router = express.Router();
 
 var ctrl_analyze = require("./controllers/analyze");
-var ctrl_options = require("./controllers/options");
-var ctrl_senddata = require("./controllers/sendRandomData");
+var ctrl_option = require("./controllers/option");
+var ctrl_signature = require("./controllers/signature");
 
-// Options de l'utilisateur
-router.get('/options', function(req, res, next) {
-	ctrl_options.get(req, res, next);	
+// Profil de l'utilisateur
+router.get('/profile', function(req, res, next) {
+	ctrl_option.get('profile', req, res, next);	
 });
 
-router.post('/options', function(req, res, next) {
-	ctrl_options.set(req, res, next);	
+router.post('/profile', function(req, res, next) {
+	ctrl_option.set('profile', req, res, next);	
 });
 
+// Politique de partage de l'utilisateur
+router.get('/sharing_permissions', function(req, res, next) {
+	ctrl_option.get('sharing_permissions', req, res, next);	
+});
+
+router.post('/sharing_permissions', function(req, res, next) {
+	ctrl_option.set('sharing_permissions', req, res, next);	
+});
 
 // Analyse
 router.get('/analyze', function(req, res, next) {
 	ctrl_analyze.analyze(req, res, next);
 });
 
-// Envoi des données au moteur
-// TODO: Mettre post pour la mise en production
-router.all('/senddata', function(req, res, next) {
-	ctrl_senddata.send(req, res, next);
-});
+/*router.get('/testSignature', function(req, res, next) {
+	ctrl_signature.engineRegister(req, res, next);
+	/*ctrl_signature.getLogins(function(r) {
+		res.status(200).send(r);
+	});*/	
+//});
 
 module.exports = router;

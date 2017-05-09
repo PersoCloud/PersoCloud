@@ -3,30 +3,66 @@ var express = require('express');
 var app = express();
 var async = require('async');
 var request = require('request');
+var schedule = require('node-schedule');
+var cozydb = require('cozydb');
+var model_sharingPermissions = require('../models/pc_sharing_permissions.js');
+
+var ctrl_signature = require('./signature');
 var hlp_random = require('../helpers/random');
 var hlp_string = require('../helpers/string');
-var schedule = require('node-schedule');
 
 schedule.scheduleJob(config.server.senddata, function() { send(); });
 
 var send = function send(req, res, next) {	
-    // On genére des factures, humeurs et des relevés de consommation électrique
-    var data = [generate("bill"), generate("mood"), generate("consuptionstatement")];
+	model_sharingPermissions.all(function (err, sharing_permissions) {		
+        if(err != undefined) {
+            console.error(err);
+        } else {	
+			var generatedData = [];
+			var logs = [];
+			sharing_permissions.forEach(function(permission) {
+				if(permission.base != undefined) {
+					if(permission.key != undefined) { // Bill // Il faut détailler l'envoi de données de certain service
+						var valuesAllowed = [];
+						permission.types.forEach(function(type) {
+							if(type.value != undefined) { // Si on détail les services
+								if(type.allowed) {
+									valuesAllowed.push(type.value);
+								}
+							} 
+						});
+						
+						if(valuesAllowed.length > 0) {
+							var data = generate(permission.base.toLowerCase(), valuesAllowed);
+							logs.push(" " + data.data.length + " " + permission.base.toLowerCase() + " parmi " + valuesAllowed);
+							generatedData.push(data);
+						}
+					}
+					else if (permission.types[0].allowed) { //FIXME: Regarder chaque valeur des types
+						var data = generate(permission.base.toLowerCase(), undefined);
+						logs.push(" " + data.data.length + " " + permission.base.toLowerCase());
+						generatedData.push(data);
+					}					
+				}
+			});
 
-    // On envoi chaque donnée dans une requête vers le moteur séparement
-    async.map(data, httpPost, function (err, response, body){
-        if (err) { 
-            console.log(err); 
-            if(res != undefined) { res.status(503).send(); }
-        } else if(response == undefined) {
-            if(res != undefined) { res.status(503).send('Service Unavailable'); }
-        } else {
-            if(res != undefined) { res.status(200).send(body); }
+			if(generatedData.length > 0) {
+				// On envoi chaque donnée dans une requête vers le moteur séparement
+				async.map(generatedData, httpPost, function (err, response, body){
+					if (err) { 
+						console.log(err); 
+						if(res != undefined) { res.status(503).send(); }
+					} else if(response == undefined) {
+						if(res != undefined) { res.status(503).send('Service Unavailable'); }
+					} else {
+						if(res != undefined) { res.status(200).send(body); }
+					}
+				});
+				console.log("[" + new Date().toLocaleDateString()+ " " + new Date().toLocaleTimeString() + "] Données envoyées au moteur :" + logs);
+			}
         }
     });
-    console.log('Données envoyées au moteur');
 };
-exports.send = send;
 
 /**
  * Envoi des données au moteur
@@ -48,16 +84,19 @@ function httpPost(data, callback) {
  * Retourne une données de type spécifié
  * @param {*} type 
  */
-function generate(type) { 
+function generate(type, valuesAllowed) { 
     var generatedData;
     switch (type) {
-        case 'bill': generatedData = generateBills(); break; 
+        case 'bill': generatedData = generateBills(valuesAllowed); break; 
         case 'mood': generatedData = generateMoods(); break; 
         case 'consuptionstatement': generatedData = generateConsuptionstatement(); break;   
         default: return generatedData = undefined; break;
     }
+    //var logins = ctrl_signature.getLogins();
     var data = {
+        //cozyid: logins.cozyid,
         cozyid: config.cozyid,
+        //signature: logins.signature,
         field: type,
         data: generatedData
     };
@@ -68,10 +107,8 @@ function generate(type) {
 /**
  * Basé sur le modèle facture de My Accounts
  */
-function generateBills() { 
-    var bills = [];  		
-    var nbDonnee = hlp_random.int(1, 11);
-
+function generateBills(valuesAllowed) { 
+    var bills = [];  	
     var types = { 
         "Orange" : "phone", 
         "Materiel.net" : "NA",
@@ -89,13 +126,22 @@ function generateBills() {
         "Virgin mobile" : "",
         "VOYAGES SNCF" : "transport"
     };
-
+	
+	var nbDonnee = hlp_random.int(1, 11);
+	if(valuesAllowed == 0) { return bills; }
+	else if(valuesAllowed < types.length) { nbDonnee = hlp_random.int(1, Math.round(valuesAllowed.length / 2)); }
+	
     for (var k=0; k<nbDonnee; k++) {			
-        var vendor = Object.keys(types)[hlp_random.int(0, Object.keys(types).length)];
+        var vendor = valuesAllowed[hlp_random.int(0, valuesAllowed.length)];
+		var amountType = hlp_random.int(0, 3);
+		var amount = hlp_random.float(5, 150, 2);
+		if(amountType == 2) {
+			amount = hlp_random.float(100, 530, 2);
+		}
         var bill = {};
         bill.vendor = vendor;
         bill.type = types[vendor],					
-        bill.amount = hlp_random.float(2, 201, 2);
+        bill.amount = amount;
         bill.time = hlp_random.timestamp(1470002400000);
         bills.push(bill);
     } 
